@@ -495,7 +495,7 @@ footer span { color: var(--orange); }
   <div class="section-inner">
     <div class="section-label">تواصل معنا</div>
     <h2 class="section-title">Let's Partner</h2>
-    <form id="myForm" class="contact-layout">
+    <form id="myForm" class="contact-layout" action="https://hooks.zapier.com/hooks/catch/27460024/uvevpg4/" method="POST" target="zapierFrame">
       <div>
         <p class="contact-intro">
           هل تمتلك مطعماً أو مقهى أو فندقاً وتبحث عن مورد موثوق؟ سجّل بياناتك وسنتواصل معك بأحدث العروض مباشرة.
@@ -557,6 +557,7 @@ footer span { color: var(--orange); }
         <button class="btn-submit" type="submit">أرسل طلبك</button>
       </div>
     </form>
+    <iframe name="zapierFrame" title="Zapier form submission" style="display:none;"></iframe>
   </div>
 </section>
 
@@ -703,8 +704,6 @@ function toggleLanguage() {
 }
 
 document.getElementById('myForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-
   var fields = this.elements;
   var data = {
     name: fields.name.value.trim(),
@@ -716,25 +715,15 @@ document.getElementById('myForm').addEventListener('submit', function(e) {
   };
 
   if (!data.name || !data.phone) {
+    e.preventDefault();
     alert(currentLang === 'ar' ? 'يرجى تعبئة اسم المنشأة ورقم التواصل على الأقل' : 'Please fill in at least the business name and phone number');
     return;
   }
 
-  fetch('https://hooks.zapier.com/hooks/catch/27460024/uvevpg4/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
-  .then(function() {
+  setTimeout(function() {
     alert(currentLang === 'ar' ? 'تم إرسال البيانات ✅' : 'Your information has been sent ✅');
     document.getElementById('myForm').reset();
-  })
-  .catch(function(error) {
-    alert(currentLang === 'ar' ? 'صار خطأ ❌' : 'Something went wrong ❌');
-    console.error(error);
-  });
+  }, 700);
 });
 </script>
 </body>
